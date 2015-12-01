@@ -4,8 +4,8 @@ class Opendylan < Formula
   homepage "http://opendylan.org/"
 
   stable do
-    url "http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86-darwin.tar.bz2"
-    sha1 "78faaec910c67356cd4b5ce7101153b6acf01cbe"
+    url "http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-darwin.tar.bz2"
+    sha1 "06fd5966a3db7ff56a7b9ecd2b3bdfab6db500f5"
 
     depends_on "bdw-gc" => :universal
   end
