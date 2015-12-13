@@ -11,6 +11,6 @@ class Melange < Formula
   end
 
   test do
-    system "false"
+    system "make", "check"
   end
 end
