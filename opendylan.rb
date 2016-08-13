@@ -5,7 +5,7 @@ class Opendylan < Formula
 
   stable do
     url "http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-darwin.tar.bz2"
-    sha1 "06fd5966a3db7ff56a7b9ecd2b3bdfab6db500f5"
+    sha256 "cd7b394b8943ccafd4643d157d385f002c5e695eb0601726af1064e3c15b5649"
 
     depends_on "bdw-gc" => :universal
   end
