@@ -1,13 +1,14 @@
 require "formula"
 
 class Opendylan < Formula
-  homepage "http://opendylan.org/"
+  desc "Open Dylan implementation of Dylan programming language"
+  homepage "https://opendylan.org/"
+  sha256 "5d1f7a0cfc71f21131e314565a646436e00b5bde50cf7a2efee585f40c4811da"
 
   stable do
-    url "http://opendylan.org/downloads/opendylan/2014.1/opendylan-2014.1-x86-darwin.tar.bz2"
-    sha256 "cd7b394b8943ccafd4643d157d385f002c5e695eb0601726af1064e3c15b5649"
+    url "https://opendylan.org/downloads/opendylan/2019.1/opendylan-2019.1-x86_64-darwin.tar.bz2"
 
-    depends_on "bdw-gc" => :universal
+    depends_on "bdw-gc"
   end
 
   head do
@@ -18,7 +19,6 @@ class Opendylan < Formula
     depends_on "bdw-gc" => :build
   end
 
-  depends_on :macos => :lion
   depends_on :arch => :intel
 
   def install
@@ -39,7 +39,7 @@ class Opendylan < Formula
     end
   end
 
-  def test
+  test do
     app_name = "hello-world"
     system bin/"make-dylan-app", app_name
     cd app_name do
