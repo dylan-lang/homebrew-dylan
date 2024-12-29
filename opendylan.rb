@@ -3,10 +3,10 @@ require "formula"
 class Opendylan < Formula
   desc "Open Dylan implementation of Dylan programming language"
   homepage "https://opendylan.org/"
-  sha256 "4f2575881fa117c54bb8acce5bd1c67e65f4dafea11207828f6634b173961b18"
+  sha256 "22a4a275546c51497064d6b9151ec2c92b94144d97ee1931530eb6ef44f070e6"
 
   stable do
-    url "https://opendylan.org/downloads/opendylan/2020.1/opendylan-2020.1-x86_64-darwin.tar.bz2"
+    url "https://github.com/dylan-lang/opendylan/releases/download/v2024.1.0/opendylan-2024.1-x86_64-darwin.tar.bz2"
 
     depends_on "bdw-gc"
   end
@@ -33,17 +33,17 @@ class Opendylan < Formula
       system "make install"
     else
       libexec.install Dir["*"]
+      bin.install_symlink "#{libexec}/bin/dylan"
       bin.install_symlink "#{libexec}/bin/dylan-compiler"
-      bin.install_symlink "#{libexec}/bin/make-dylan-app"
       bin.install_symlink "#{libexec}/bin/dswank"
     end
   end
 
   test do
     app_name = "hello-world"
-    system bin/"make-dylan-app", app_name
+    system bin/"dylan", "new", "application", "--simple", app_name
     cd app_name do
-      system bin/"dylan-compiler", "-build", app_name
+      system bin/"dylan", "build", "--all"
       assert_equal 0, $?.exitstatus
     end
     assert_equal "Hello, world!\n",
