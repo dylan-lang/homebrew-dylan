@@ -44,7 +44,7 @@ class Opendylan < Formula
     system bin/"dylan", "new", "application", "--simple", app_name
     cd app_name do
       system bin/"dylan", "build", "--all"
-      assert_equal 0, $?.exitstatus
+      assert_equal 0, $CHILD_STATUS.exitstatus
     end
     assert_equal "Hello, world!\n",
                  `#{app_name}/_build/bin/#{app_name}`
