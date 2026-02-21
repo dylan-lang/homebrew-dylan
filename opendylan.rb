@@ -1,12 +1,13 @@
-require "formula"
+# typed: strict
+# frozen_string_literal: true
 
 class Opendylan < Formula
-  desc "Open Dylan implementation of Dylan programming language"
+  desc "Open Dylan implementation of the Dylan programming language"
   homepage "https://opendylan.org/"
-  sha256 "22a4a275546c51497064d6b9151ec2c92b94144d97ee1931530eb6ef44f070e6"
 
   stable do
-    url "https://github.com/dylan-lang/opendylan/releases/download/v2024.1.0/opendylan-2024.1-x86_64-darwin.tar.bz2"
+    url "https://github.com/dylan-lang/opendylan/releases/download/v2026.1.0/opendylan-2026.1-x86_64-darwin.tar.bz2"
+    sha256 "305bcba52914713508fa1a97b5b6d7e042fba1b0d1415eab90c35417b2da15cd"
 
     depends_on "bdw-gc"
   end
@@ -19,18 +20,17 @@ class Opendylan < Formula
     depends_on "bdw-gc" => :build
   end
 
-  depends_on :arch => :intel
+  depends_on arch: :intel
 
   def install
-
     ENV.deparallelize
 
     if build.head?
       ohai "Compilation takes a long time; use `brew install -v opendylan` to see progress" unless ARGV.verbose?
       system "./autogen.sh"
       system "./configure", "--prefix=#{prefix}"
-      system "make 3-stage-bootstrap"
-      system "make install"
+      system "make", "3-stage-bootstrap"
+      system "make", "install"
     else
       libexec.install Dir["*"]
       bin.install_symlink "#{libexec}/bin/dylan"
@@ -44,10 +44,10 @@ class Opendylan < Formula
     system bin/"dylan", "new", "application", "--simple", app_name
     cd app_name do
       system bin/"dylan", "build", "--all"
-      assert_equal 0, $?.exitstatus
+      assert_equal 0, $CHILD_STATUS.exitstatus
     end
     assert_equal "Hello, world!\n",
-                 `#{ app_name }/_build/bin/#{ app_name }`
-    assert_equal 0, $?.exitstatus
+                 `#{app_name}/_build/bin/#{app_name}`
+    assert_equal 0, $CHILD_STATUS.exitstatus
   end
 end
