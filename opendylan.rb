@@ -33,7 +33,8 @@ class Opendylan < Formula
       system "make", "install"
     else
       libexec.install Dir["*"]
-      bin.install_symlink "#{libexec}/bin/dylan"
+      bin.install_symlink "#{libexec}/bin/deft"
+      bin.install_symlink "#{libexec}/bin/dylan" # temp back compat
       bin.install_symlink "#{libexec}/bin/dylan-compiler"
       bin.install_symlink "#{libexec}/bin/dswank"
     end
@@ -41,9 +42,9 @@ class Opendylan < Formula
 
   test do
     app_name = "hello-world"
-    system bin/"dylan", "new", "application", "--simple", app_name
+    system bin/"deft", "new", "application", "--simple", app_name
     cd app_name do
-      system bin/"dylan", "build", "--all"
+      system bin/"deft", "build", "--all"
       assert_equal 0, $CHILD_STATUS.exitstatus
     end
     assert_equal "Hello, world!\n",
