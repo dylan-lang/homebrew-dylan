@@ -1,16 +1,14 @@
 # typed: strict
 # frozen_string_literal: true
 
+# Open Dylan formula
 class Opendylan < Formula
-  desc "Open Dylan implementation of the Dylan programming language"
+  desc "Implementation of the Dylan programming language (Open Dylan)"
   homepage "https://opendylan.org/"
+  url "https://github.com/dylan-lang/opendylan/releases/download/v2026.1.0/opendylan-2026.1-x86_64-darwin.tar.bz2"
+  sha256 "305bcba52914713508fa1a97b5b6d7e042fba1b0d1415eab90c35417b2da15cd"
 
-  stable do
-    url "https://github.com/dylan-lang/opendylan/releases/download/v2026.1.0/opendylan-2026.1-x86_64-darwin.tar.bz2"
-    sha256 "305bcba52914713508fa1a97b5b6d7e042fba1b0d1415eab90c35417b2da15cd"
-
-    depends_on "bdw-gc"
-  end
+  depends_on "bdw-gc"
 
   head do
     url "https://github.com/dylan-lang/opendylan.git"
@@ -20,13 +18,11 @@ class Opendylan < Formula
     depends_on "bdw-gc" => :build
   end
 
-  depends_on arch: :intel
-
   def install
     ENV.deparallelize
 
     if build.head?
-      ohai "Compilation takes a long time; use `brew install -v opendylan` to see progress" unless ARGV.verbose?
+      ohai "Compilation takes a long time; use `brew install -v opendylan` to see progress" unless verbose?
       system "./autogen.sh"
       system "./configure", "--prefix=#{prefix}"
       system "make", "3-stage-bootstrap"
