@@ -6,8 +6,13 @@ class Opendylan < Formula
   homepage "https://opendylan.org/"
 
   stable do
-    url "https://github.com/dylan-lang/opendylan/releases/download/v2026.1.0/opendylan-2026.1-x86_64-darwin.tar.bz2"
-    sha256 "305bcba52914713508fa1a97b5b6d7e042fba1b0d1415eab90c35417b2da15cd"
+    if Hardware::CPU.arm?
+      url "https://github.com/dylan-lang/opendylan/releases/download/v2026.2.0/opendylan-2026.2-aarch64-darwin.tar.bz2"
+      sha256 "344028dfc0f14aaf8b59a9dc7a96fdf6d3f7697198a3c4c49ba5a792781402c5"
+    else
+      url "https://github.com/dylan-lang/opendylan/releases/download/v2026.2.0/opendylan-2026.2-x86_64-darwin.tar.bz2"
+      sha256 "e52be1e907fbf2cdf6eb786446ffce7629031621b92a7ea4c37d44c7364ebac5"
+    end
 
     depends_on "bdw-gc"
   end
@@ -19,8 +24,6 @@ class Opendylan < Formula
     depends_on "automake" => :build
     depends_on "bdw-gc" => :build
   end
-
-  depends_on arch: :intel
 
   def install
     ENV.deparallelize
