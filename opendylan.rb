@@ -40,10 +40,23 @@ class Opendylan < Formula
       bin.install_symlink "#{libexec}/bin/dylan" # temp back compat
       bin.install_symlink "#{libexec}/bin/dylan-compiler"
       bin.install_symlink "#{libexec}/bin/dswank"
+      bin.install_symlink "#{libexec}/bin/dylan-environment"
+      bin.install_symlink "#{libexec}/bin/dylan-lsp-server"
+      bin.install_symlink "#{libexec}/bin/dylan-lldb"
+
+      # dylan-lldb locates its Python helper package by walking up from
+      # wherever `dylan-compiler` resolves on the PATH, then down into
+      # share/opendylan/lldb/dylan (see tools/scripts/dylan-lldb upstream).
+      # That "bin/../share" sibling relationship only holds if share/opendylan
+      # is also linked into the prefix, since the actual files live in libexec.
+      share.install_symlink "#{libexec}/share/opendylan"
     end
   end
 
   test do
+    assert_predicate bin/"dylan-lldb", :exist?
+    assert_predicate share/"opendylan/lldb/dylan", :directory?
+
     app_name = "hello-world"
     system bin/"deft", "new", "application", "--simple", app_name
     cd app_name do
